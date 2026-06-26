@@ -26,26 +26,20 @@ export default function InputSection({
 
   const handleDragOver = useCallback((e: DragEvent) => {
     e.preventDefault();
-    e.stopPropagation();
     setIsDragging(true);
   }, []);
 
   const handleDragLeave = useCallback((e: DragEvent) => {
     e.preventDefault();
-    e.stopPropagation();
     setIsDragging(false);
   }, []);
 
   const handleDrop = useCallback(
     (e: DragEvent) => {
       e.preventDefault();
-      e.stopPropagation();
       setIsDragging(false);
-
       const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        readFile(files[0]);
-      }
+      if (files.length > 0) readFile(files[0]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -58,162 +52,134 @@ export default function InputSection({
     }
     setFileName(file.name);
     const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = e.target?.result as string;
-      onLatexChange(text);
-    };
+    reader.onload = (e) => onLatexChange(e.target?.result as string);
     reader.readAsText(file);
   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      readFile(files[0]);
-    }
-  };
-
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full">
-      {/* Left Panel: LaTeX Resume */}
-      <section className="flex-1 flex flex-col min-w-0">
-        <div className="mb-3 flex items-center justify-between">
-          <label className="font-semibold text-lg text-on-surface">
-            Your Resume (.tex)
-          </label>
-          <span className="px-2 py-1 bg-surface-container-high rounded text-[10px] font-bold text-primary uppercase tracking-wider">
-            LaTeX Only
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      {/* ===== LEFT: LaTeX Resume ===== */}
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-brand-400/10 flex items-center justify-center">
+              <span className="material-symbols-outlined text-brand-400" style={{ fontSize: 18 }}>code</span>
+            </div>
+            <span className="font-semibold text-ink-900 text-[15px]">Your Resume</span>
+          </div>
+          <span className="text-[10px] font-bold text-brand-500 bg-brand-100 px-2.5 py-1 rounded-full uppercase tracking-widest">
+            .tex / .txt
           </span>
         </div>
 
         {!latex ? (
-          /* Drop Zone */
           <div
-            id="drop-zone"
-            className={`flex-1 min-h-[400px] glass-panel rounded-xl border-dashed border-2 flex flex-col items-center justify-center p-16 transition-all cursor-pointer group ${
-              isDragging
-                ? "border-primary bg-primary-container/5"
-                : "border-outline-variant hover:border-primary"
-            }`}
+            onClick={() => fileInputRef.current?.click()}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
+            className={`
+              flex-1 min-h-[380px] rounded-2xl border-2 border-dashed cursor-pointer
+              flex flex-col items-center justify-center gap-4 transition-all duration-300
+              backdrop-blur-sm
+              ${isDragging
+                ? "border-brand-400 bg-brand-50/80 scale-[1.01]"
+                : "border-ink-100/60 bg-white/60 hover:border-brand-300 hover:bg-white/80"
+              }
+            `}
           >
-            <div className="w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <span className="material-symbols-outlined text-primary text-4xl">
+            <div className={`
+              w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300
+              ${isDragging ? "bg-brand-400 scale-110" : "bg-gradient-to-br from-brand-100 to-brand-200"}
+            `}>
+              <span className="material-symbols-outlined text-brand-600" style={{ fontSize: 30, fontVariationSettings: "'FILL' 1" }}>
                 upload_file
               </span>
             </div>
-            <p className="font-semibold text-xl text-on-surface text-center mb-2">
-              Drag & drop your .tex file
-            </p>
-            <p className="text-sm text-secondary text-center">
-              or click to browse your local storage
-            </p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".tex,.txt"
-              className="hidden"
-              onChange={handleFileSelect}
-            />
-            <div className="mt-8 flex gap-2">
-              <div className="flex items-center gap-1 px-3 py-1 bg-surface-container rounded-full text-xs text-on-secondary-container">
-                <span className="material-symbols-outlined text-sm">
-                  check_circle
-                </span>
-                .tex files
-              </div>
-              <div className="flex items-center gap-1 px-3 py-1 bg-surface-container rounded-full text-xs text-on-secondary-container">
-                <span className="material-symbols-outlined text-sm">
-                  check_circle
-                </span>
-                .txt files
-              </div>
+            <div className="text-center">
+              <p className="font-semibold text-ink-900 text-base">Drop your .tex file here</p>
+              <p className="text-ink-300 text-sm mt-1">or click to browse</p>
             </div>
+            <div className="flex gap-2 mt-2">
+              <span className="inline-flex items-center gap-1 text-[11px] text-ink-400 bg-surface-100 px-3 py-1.5 rounded-full">
+                <span className="material-symbols-outlined text-success" style={{ fontSize: 14 }}>check_circle</span>
+                LaTeX
+              </span>
+              <span className="inline-flex items-center gap-1 text-[11px] text-ink-400 bg-surface-100 px-3 py-1.5 rounded-full">
+                <span className="material-symbols-outlined text-success" style={{ fontSize: 14 }}>check_circle</span>
+                Plain Text
+              </span>
+            </div>
+            <input ref={fileInputRef} type="file" accept=".tex,.txt" className="hidden"
+              onChange={(e) => e.target.files?.[0] && readFile(e.target.files[0])}
+            />
           </div>
         ) : (
-          /* LaTeX Editor */
-          <div className="flex-1 min-h-[400px] glass-panel rounded-xl flex flex-col overflow-hidden border border-outline-variant focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all">
+          <div className="flex-1 min-h-[380px] rounded-2xl bg-white/70 backdrop-blur-sm border border-ink-100/40 flex flex-col overflow-hidden transition-all focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-400/15">
             <textarea
-              id="latex-input"
               value={latex}
               onChange={(e) => onLatexChange(e.target.value)}
-              className="flex-1 p-6 bg-transparent border-none focus:ring-0 resize-none font-mono text-sm text-on-surface placeholder:text-on-surface-variant/40"
+              className="flex-1 p-5 bg-transparent resize-none font-mono text-[13px] leading-relaxed text-ink-700 placeholder:text-ink-200"
               placeholder="Paste your LaTeX resume code here..."
               spellCheck={false}
             />
-            <div className="p-3 bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                {fileName && (
-                  <span className="flex items-center gap-1 text-[10px] text-primary font-bold uppercase tracking-tight">
-                    <span className="material-symbols-outlined text-sm">
-                      description
-                    </span>
-                    {fileName}
-                  </span>
-                )}
-              </div>
-              <button
-                onClick={() => {
-                  onLatexChange("");
-                  setFileName(null);
-                }}
-                className="text-xs text-error font-bold hover:underline"
-              >
+            <div className="px-4 py-2.5 bg-surface-100/60 border-t border-ink-100/30 flex items-center justify-between">
+              {fileName && (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-brand-500">
+                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>description</span>
+                  {fileName}
+                </span>
+              )}
+              <button onClick={() => { onLatexChange(""); setFileName(null); }}
+                className="text-[11px] font-bold text-danger hover:underline ml-auto">
                 Clear
               </button>
             </div>
           </div>
         )}
-      </section>
+      </div>
 
-      {/* Right Panel: Job Description */}
-      <section className="flex-1 flex flex-col min-w-0">
-        <div className="mb-3 flex items-center justify-between">
-          <label className="font-semibold text-lg text-on-surface">
-            Target Job Description
-          </label>
-          <div className="flex gap-2">
-            {jobDescription && (
-              <button
-                onClick={() => onJobDescriptionChange("")}
-                className="text-primary hover:bg-primary-fixed px-2 py-1 rounded text-xs font-bold transition-colors"
-              >
-                Clear
-              </button>
-            )}
+      {/* ===== RIGHT: Job Description ===== */}
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-brand-400/10 flex items-center justify-center">
+              <span className="material-symbols-outlined text-brand-400" style={{ fontSize: 18 }}>work</span>
+            </div>
+            <span className="font-semibold text-ink-900 text-[15px]">Job Description</span>
           </div>
+          {jobDescription && (
+            <button onClick={() => onJobDescriptionChange("")}
+              className="text-[11px] font-bold text-danger hover:underline">
+              Clear
+            </button>
+          )}
         </div>
-        <div className="flex-1 min-h-[400px] glass-panel rounded-xl flex flex-col overflow-hidden border border-outline-variant focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all">
+
+        <div className="flex-1 min-h-[380px] rounded-2xl bg-white/70 backdrop-blur-sm border border-ink-100/40 flex flex-col overflow-hidden transition-all focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-400/15">
           <textarea
-            id="jd-input"
             value={jobDescription}
             onChange={(e) => onJobDescriptionChange(e.target.value)}
-            className="flex-1 p-6 bg-transparent border-none focus:ring-0 resize-none text-base text-on-surface placeholder:text-on-surface-variant/40"
-            placeholder="Paste the job description, responsibilities, and requirements here..."
+            className="flex-1 p-5 bg-transparent resize-none text-[14px] leading-relaxed text-ink-700 placeholder:text-ink-200"
+            placeholder="Paste the full job description here — responsibilities, requirements, qualifications..."
           />
-          <div className="p-3 bg-surface-container-low border-t border-outline-variant flex justify-between items-center">
+          <div className="px-4 py-2.5 bg-surface-100/60 border-t border-ink-100/30 flex items-center justify-between">
             <div className="flex gap-4">
-              <span className="flex items-center gap-1 text-[10px] text-secondary font-bold uppercase tracking-tight">
-                <span className="material-symbols-outlined text-sm">
-                  language
-                </span>
-                Auto-detect
+              <span className="inline-flex items-center gap-1 text-[10px] text-ink-300 font-semibold uppercase tracking-wide">
+                <span className="material-symbols-outlined" style={{ fontSize: 13 }}>psychology</span>
+                AI Analysis
               </span>
-              <span className="flex items-center gap-1 text-[10px] text-secondary font-bold uppercase tracking-tight">
-                <span className="material-symbols-outlined text-sm">
-                  analytics
-                </span>
+              <span className="inline-flex items-center gap-1 text-[10px] text-ink-300 font-semibold uppercase tracking-wide">
+                <span className="material-symbols-outlined" style={{ fontSize: 13 }}>verified</span>
                 ATS Ready
               </span>
             </div>
-            <span className="text-xs text-secondary font-mono">
-              {wordCount} words
+            <span className="text-[11px] text-ink-300 font-mono tabular-nums">
+              {wordCount} {wordCount === 1 ? "word" : "words"}
             </span>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

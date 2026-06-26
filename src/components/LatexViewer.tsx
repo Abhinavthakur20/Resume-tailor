@@ -7,31 +7,23 @@ interface LatexViewerProps {
   updatedLatex: string;
 }
 
-export default function LatexViewer({
-  originalLatex,
-  updatedLatex,
-}: LatexViewerProps) {
+export default function LatexViewer({ originalLatex, updatedLatex }: LatexViewerProps) {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<"comparison" | "updated">(
-    "comparison"
-  );
+  const [tab, setTab] = useState<"compare" | "full">("compare");
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(updatedLatex);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement("textarea");
-      textarea.value = updatedLatex;
-      document.body.appendChild(textarea);
-      textarea.select();
+      const ta = document.createElement("textarea");
+      ta.value = updatedLatex;
+      document.body.appendChild(ta);
+      ta.select();
       document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      document.body.removeChild(ta);
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleDownload = () => {
@@ -47,96 +39,75 @@ export default function LatexViewer({
   };
 
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-md">
-      {/* Header Bar */}
-      <div className="bg-surface-container px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-outline-variant">
+    <div className="rounded-2xl bg-white/70 backdrop-blur-sm border border-ink-100/40 overflow-hidden">
+      {/* Toolbar */}
+      <div className="px-5 py-3 bg-surface-100/80 border-b border-ink-100/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary">code</span>
-          <h3 className="font-semibold text-lg text-on-surface">
-            Source Code
-          </h3>
+          <span className="material-symbols-outlined text-brand-400" style={{ fontSize: 20 }}>code</span>
+          <h3 className="font-bold text-[15px] text-ink-900">LaTeX Source</h3>
         </div>
-        <div className="flex items-center gap-3">
-          {/* Tab Buttons */}
-          <div className="flex bg-surface-variant/50 rounded-lg p-0.5">
-            <button
-              onClick={() => setActiveTab("comparison")}
-              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${
-                activeTab === "comparison"
-                  ? "bg-surface-container-lowest text-primary shadow-sm"
-                  : "text-secondary hover:text-on-surface"
-              }`}
-            >
-              Comparison
-            </button>
-            <button
-              onClick={() => setActiveTab("updated")}
-              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${
-                activeTab === "updated"
-                  ? "bg-surface-container-lowest text-primary shadow-sm"
-                  : "text-secondary hover:text-on-surface"
-              }`}
-            >
-              Updated Only
-            </button>
+
+        <div className="flex items-center gap-2">
+          {/* Tab Switcher */}
+          <div className="flex bg-white/80 rounded-lg p-0.5 border border-ink-100/30">
+            {(["compare", "full"] as const).map((t) => (
+              <button key={t} onClick={() => setTab(t)}
+                className={`px-3 py-1.5 rounded-md text-[11px] font-bold transition-all ${
+                  tab === t
+                    ? "bg-brand-400 text-white shadow-sm"
+                    : "text-ink-400 hover:text-ink-700"
+                }`}
+              >
+                {t === "compare" ? "Side by Side" : "Optimized"}
+              </button>
+            ))}
           </div>
 
-          {/* Action Buttons */}
-          <button
-            onClick={handleCopy}
-            id="copy-latex-btn"
-            className="flex items-center gap-1.5 px-4 py-2 text-secondary border border-outline rounded-lg text-sm font-bold hover:bg-surface-variant transition-all active:scale-95"
-          >
-            <span className="material-symbols-outlined text-sm">
-              {copied ? "check" : "content_copy"}
-            </span>
+          <button onClick={handleCopy}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[12px] font-bold border border-ink-100/40 text-ink-500 hover:bg-surface-100 transition-all active:scale-95">
+            <span className="material-symbols-outlined" style={{ fontSize: 15 }}>{copied ? "check" : "content_copy"}</span>
             {copied ? "Copied!" : "Copy"}
           </button>
-          <button
-            onClick={handleDownload}
-            id="download-tex-btn"
-            className="flex items-center gap-1.5 px-4 py-2 bg-primary-container text-white rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-95"
-          >
-            <span className="material-symbols-outlined text-sm">download</span>
-            Download .tex
+
+          <button onClick={handleDownload}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[12px] font-bold bg-brand-400 text-white hover:bg-brand-500 shadow-sm transition-all active:scale-95">
+            <span className="material-symbols-outlined" style={{ fontSize: 15 }}>download</span>
+            .tex
           </button>
         </div>
       </div>
 
-      {/* Content */}
-      {activeTab === "comparison" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 divide-x divide-outline-variant">
-          {/* Original Source */}
-          <div className="flex flex-col h-[500px]">
-            <div className="p-2 bg-surface-container-low text-xs font-bold text-secondary border-b border-outline-variant px-6 uppercase tracking-wider">
-              Original LaTeX
+      {/* Code Display */}
+      {tab === "compare" ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 divide-x divide-ink-100/30">
+          {/* Original */}
+          <div className="flex flex-col max-h-[500px]">
+            <div className="px-5 py-2 bg-surface-100/50 text-[10px] font-bold text-ink-300 uppercase tracking-widest border-b border-ink-100/20">
+              Original
             </div>
-            <div className="flex-1 p-6 overflow-y-auto custom-scrollbar bg-slate-50">
-              <pre className="whitespace-pre-wrap text-sm font-mono text-slate-600 break-words">
+            <div className="flex-1 p-5 overflow-y-auto custom-scrollbar bg-surface-50/50">
+              <pre className="whitespace-pre-wrap text-[12px] font-mono leading-relaxed text-ink-400 break-words">
                 {originalLatex}
               </pre>
             </div>
           </div>
-          {/* Optimized Source */}
-          <div className="flex flex-col h-[500px]">
-            <div className="p-2 bg-surface-container-low text-xs font-bold text-secondary border-b border-outline-variant px-6 uppercase tracking-wider">
-              Optimized LaTeX
+          {/* Optimized */}
+          <div className="flex flex-col max-h-[500px]">
+            <div className="px-5 py-2 bg-surface-100/50 text-[10px] font-bold text-ink-300 uppercase tracking-widest border-b border-ink-100/20">
+              Optimized
             </div>
-            <div className="flex-1 p-6 overflow-y-auto custom-scrollbar">
-              <pre className="whitespace-pre-wrap text-sm font-mono text-on-surface break-words">
+            <div className="flex-1 p-5 overflow-y-auto custom-scrollbar">
+              <pre className="whitespace-pre-wrap text-[12px] font-mono leading-relaxed text-ink-900 break-words">
                 {updatedLatex}
               </pre>
             </div>
           </div>
         </div>
       ) : (
-        /* Full Updated View */
-        <div className="flex flex-col h-[500px]">
-          <div className="flex-1 p-6 overflow-y-auto custom-scrollbar">
-            <pre className="whitespace-pre-wrap text-sm font-mono text-on-surface break-words">
-              {updatedLatex}
-            </pre>
-          </div>
+        <div className="max-h-[500px] overflow-y-auto custom-scrollbar p-5">
+          <pre className="whitespace-pre-wrap text-[12px] font-mono leading-relaxed text-ink-900 break-words">
+            {updatedLatex}
+          </pre>
         </div>
       )}
     </div>
