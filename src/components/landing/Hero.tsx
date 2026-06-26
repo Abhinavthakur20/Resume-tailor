@@ -3,14 +3,18 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="pt-20 pb-24 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
+    <section className="relative pt-24 pb-28 px-6 md:px-12 bg-linear-to-b from-primary-50/30 via-white to-white overflow-hidden border-b border-neutral-100">
+      {/* Premium Decorative Glow Blobs */}
+      <div className="absolute top-12 left-12 w-80 h-80 bg-primary-400/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-12 right-12 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl -z-10" />
+
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column - Headline & CTA */}
         <div className="lg:col-span-6 text-left space-y-8 animate-fade-up">
           <div className="space-y-4">
             <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-neutral-900 leading-[1.1] tracking-tight">
               Tailor your resume <br />
-              <span className="text-primary-500">for every job.</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-emerald-500">for every job.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-neutral-500 max-w-lg leading-relaxed pt-2">
@@ -46,7 +50,7 @@ export default function Hero() {
 
         {/* Right Column - Premium Product Mockup */}
         <div className="lg:col-span-6 relative w-full flex justify-center lg:justify-end animate-fade-up">
-          <div className="w-full max-w-lg bg-neutral-900 rounded-2xl p-5 shadow-2xl flex flex-col gap-4 overflow-hidden border border-neutral-800">
+          <div className="w-full max-w-lg bg-neutral-950 rounded-2xl p-5 shadow-2xl hover:shadow-[0_20px_50px_rgba(13,148,136,0.15)] hover:border-primary-500/30 transition-all duration-500 flex flex-col gap-4 overflow-hidden border border-neutral-800/80">
             {/* Mock Window Header */}
             <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
               <div className="flex gap-1.5">

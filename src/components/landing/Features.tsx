@@ -21,7 +21,7 @@ export default function Features() {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1: LaTeX Code Preservation (col-span-2) */}
-          <div className="md:col-span-2 bg-neutral-50 rounded-2xl p-8 border border-neutral-200/80 flex flex-col justify-between overflow-hidden relative min-h-[320px]">
+          <div className="md:col-span-2 bg-white rounded-2xl p-8 border border-neutral-200/80 hover:-translate-y-1.5 hover:shadow-lg hover:border-primary-500/25 transition-all duration-300 flex flex-col justify-between overflow-hidden relative min-h-[320px]">
             <div className="max-w-md space-y-3 z-10">
               <span className="text-[10px] uppercase tracking-wider text-primary-600 font-bold bg-primary-50 px-2.5 py-1 rounded-full border border-primary-200/50">Core technology</span>
               <h3 className="text-xl sm:text-2xl font-extrabold text-neutral-900">LaTeX Layout Preservation</h3>
@@ -47,7 +47,7 @@ export default function Features() {
           </div>
 
           {/* Card 2: Semantic ATS Keyword Extraction (col-span-1) */}
-          <div className="bg-neutral-50 rounded-2xl p-8 border border-neutral-200/80 flex flex-col justify-between min-h-[320px]">
+          <div className="bg-white rounded-2xl p-8 border border-neutral-200/80 hover:-translate-y-1.5 hover:shadow-lg hover:border-primary-500/25 transition-all duration-300 flex flex-col justify-between min-h-[320px]">
             <div className="space-y-3">
               <span className="text-[10px] uppercase tracking-wider text-primary-600 font-bold bg-primary-50 px-2.5 py-1 rounded-full border border-primary-200/50">ATS Analyzer</span>
               <h3 className="text-xl font-extrabold text-neutral-900">Semantic Matching</h3>
@@ -74,7 +74,7 @@ export default function Features() {
           </div>
 
           {/* Card 3: Bullet Optimization (col-span-1) */}
-          <div className="bg-neutral-50 rounded-2xl p-8 border border-neutral-200/80 flex flex-col justify-between min-h-[320px]">
+          <div className="bg-white rounded-2xl p-8 border border-neutral-200/80 hover:-translate-y-1.5 hover:shadow-lg hover:border-primary-500/25 transition-all duration-300 flex flex-col justify-between min-h-[320px]">
             <div className="space-y-3">
               <span className="text-[10px] uppercase tracking-wider text-primary-600 font-bold bg-primary-50 px-2.5 py-1 rounded-full border border-primary-200/50">AI Copilot</span>
               <h3 className="text-xl font-extrabold text-neutral-900">Honest Rewriting</h3>
@@ -95,7 +95,7 @@ export default function Features() {
           </div>
 
           {/* Card 4: Side-by-side Diff View (col-span-2) */}
-          <div className="md:col-span-2 bg-neutral-50 rounded-2xl p-8 border border-neutral-200/80 flex flex-col justify-between overflow-hidden relative min-h-[320px]">
+          <div className="md:col-span-2 bg-white rounded-2xl p-8 border border-neutral-200/80 hover:-translate-y-1.5 hover:shadow-lg hover:border-primary-500/25 transition-all duration-300 flex flex-col justify-between overflow-hidden relative min-h-[320px]">
             <div className="max-w-md space-y-3 z-10">
               <span className="text-[10px] uppercase tracking-wider text-primary-600 font-bold bg-primary-50 px-2.5 py-1 rounded-full border border-primary-200/50">Interface</span>
               <h3 className="text-xl sm:text-2xl font-extrabold text-neutral-900">Side-by-Side Diff Tool</h3>

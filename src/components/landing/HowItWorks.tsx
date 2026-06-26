@@ -43,11 +43,11 @@ export default function HowItWorks() {
                   <div className="hidden md:block flex-1 h-px bg-neutral-300" />
                 )}
               </div>
-              <div className="bg-white border border-neutral-200 rounded-xl p-6">
-                <div className="w-11 h-11 rounded-lg bg-primary-50 flex items-center justify-center mb-4">
+              <div className="bg-white border border-neutral-200 rounded-2xl p-6 hover:-translate-y-1.5 hover:shadow-lg hover:border-primary-500/20 transition-all duration-300 relative">
+                <div className="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center mb-4 border border-primary-100/50">
                   <span className="material-symbols-outlined text-primary-600" style={{ fontSize: 22 }}>{step.icon}</span>
                 </div>
-                <h3 className="font-semibold text-neutral-900 text-lg mb-2">{step.title}</h3>
+                <h3 className="font-bold text-neutral-900 text-lg mb-2">{step.title}</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">{step.description}</p>
               </div>
             </div>
