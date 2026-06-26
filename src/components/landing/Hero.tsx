@@ -24,7 +24,7 @@ export default function Hero() {
           <Link href="/app/workspace"
             className="inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-semibold px-8 py-3.5 rounded-lg text-base transition-colors shadow-sm">
             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>rocket_launch</span>
-            Start Tailoring — Free
+            Go to Workspace
           </Link>
           <a href="#how-it-works"
             className="inline-flex items-center justify-center gap-2 border border-neutral-300 text-neutral-700 font-semibold px-8 py-3.5 rounded-lg text-base hover:bg-neutral-50 transition-colors">

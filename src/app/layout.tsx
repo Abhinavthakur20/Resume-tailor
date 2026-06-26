@@ -6,7 +6,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Resume Tailor AI — ATS-Optimized LaTeX Resumes",
+  title: "Tailorly — ATS-Optimized LaTeX Resumes",
   description: "Optimize your LaTeX resume for any job description. AI-powered ATS keyword analysis and resume rewriting in 30 seconds.",
 };
 

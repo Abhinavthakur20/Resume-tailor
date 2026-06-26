@@ -4,7 +4,7 @@ const testimonials = [
   {
     name: "Priya S.",
     role: "Frontend Developer",
-    text: "I was applying to 10+ jobs a day with zero callbacks. After using Resume Tailor AI, I got 4 interview calls in one week. The keyword matching is spot on.",
+    text: "I was applying to 10+ jobs a day with zero callbacks. After using Tailorly, I got 4 interview calls in one week. The keyword matching is spot on.",
     avatar: "PS",
   },
   {

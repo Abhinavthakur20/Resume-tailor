@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 const faqs = [
-  { q: "Does it support custom LaTeX classes and macros?", a: "Yes. Resume Tailor AI understands your LaTeX structure — custom commands, packages, TikZ, everything. We only modify the text content, never the formatting or code structure." },
+  { q: "Does it support custom LaTeX classes and macros?", a: "Yes. Tailorly understands your LaTeX structure — custom commands, packages, TikZ, everything. We only modify the text content, never the formatting or code structure." },
   { q: "Will the AI fabricate skills or experience I don't have?", a: "No. The AI is instructed to only add keywords that can be naturally integrated into your existing bullet points. It will never invent experience, certifications, or skills you don't have." },
   { q: "How does the ATS scoring work?", a: "We extract the top 15 most important keywords from the job description, then calculate what percentage of those keywords appear in your resume — before and after optimization." },
   { q: "Can I use this with Overleaf?", a: "Absolutely. Copy the optimized LaTeX code, paste it into your Overleaf project, compile, and you're done. It's designed for that exact workflow." },
@@ -18,7 +18,7 @@ export default function FAQ() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-14">
           <h2 className="text-3xl font-bold text-neutral-900 mb-3">Frequently Asked Questions</h2>
-          <p className="text-neutral-500">Common questions about Resume Tailor AI.</p>
+          <p className="text-neutral-500">Common questions about Tailorly.</p>
         </div>
 
         <div className="space-y-2">

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Link from "next/link";
 import { TailorResponse, LoadingState } from "@/types";
 import InputSection from "@/components/InputSection";
 import OutputSection from "@/components/OutputSection";
@@ -39,11 +40,15 @@ export default function WorkspacePage() {
     <div className="flex flex-col h-full">
       {/* Header */}
       <header className="h-14 px-6 flex items-center justify-between border-b border-neutral-200 bg-white shrink-0">
-        <div className="flex items-center gap-2">
-          <button data-menu-toggle className="md:hidden p-1.5 text-neutral-400 hover:text-neutral-900 rounded-lg">
-            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>menu</span>
-          </button>
-          <h1 className="font-semibold text-neutral-900">Workspace</h1>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-primary-500 flex items-center justify-center">
+              <span className="material-symbols-outlined text-white" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>description</span>
+            </div>
+            <span className="font-bold text-neutral-900 text-sm">Tailorly</span>
+          </Link>
+          <div className="h-4 w-px bg-neutral-200" />
+          <h1 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Workspace</h1>
         </div>
         {result && (
           <button onClick={() => {

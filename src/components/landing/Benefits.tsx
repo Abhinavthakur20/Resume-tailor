@@ -1,7 +1,7 @@
 import React from "react";
 
 const benefits = [
-  { value: "3x", label: "More interview calls", desc: "Users report 3x more callbacks after optimizing with Resume Tailor AI." },
+  { value: "3x", label: "More interview calls", desc: "Users report 3x more callbacks after optimizing with Tailorly." },
   { value: "30s", label: "Per resume", desc: "What used to take 30 minutes now takes 30 seconds." },
   { value: "94%", label: "Average ATS score", desc: "Our optimized resumes score 94% on average against ATS scanners." },
   { value: "15+", label: "Keywords per scan", desc: "We extract and match 15+ keywords from every job description." },

@@ -7,7 +7,6 @@ export default function Navbar() {
   const links = [
     { label: "How it Works", href: "#how-it-works" },
     { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
     { label: "FAQ", href: "#faq" },
   ];
 
@@ -18,7 +17,7 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center">
             <span className="material-symbols-outlined text-white" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>description</span>
           </div>
-          <span className="font-bold text-neutral-900 text-lg">Resume Tailor AI</span>
+          <span className="font-bold text-neutral-900 text-lg">Tailorly</span>
         </Link>
 
         {/* Desktop Links */}
@@ -29,10 +28,9 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/app/workspace" className="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">Sign In</Link>
           <Link href="/app/workspace"
             className="text-sm font-semibold bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg transition-colors">
-            Get Started Free
+            Go to Workspace
           </Link>
         </div>
 
@@ -48,8 +46,8 @@ export default function Navbar() {
           {links.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block text-sm text-neutral-600 py-2">{l.label}</a>
           ))}
-          <Link href="/app/workspace" className="block text-sm font-semibold bg-primary-500 text-white text-center px-4 py-2.5 rounded-lg mt-2">
-            Get Started Free
+          <Link href="/app/workspace" onClick={() => setOpen(false)} className="block text-sm font-semibold bg-primary-500 text-white text-center px-4 py-2.5 rounded-lg mt-2">
+            Go to Workspace
           </Link>
         </div>
       )}
