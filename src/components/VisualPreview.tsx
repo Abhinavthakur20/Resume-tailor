@@ -85,8 +85,18 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
     clean = clean.replace(/\\begin\{center\}/g, '<div class="text-center my-3 text-neutral-800">');
     clean = clean.replace(/\\end\{center\}/g, '</div>');
 
-    // C. Convert core headers and formats
+    // C. Convert lists & itemize before square option stripping (so list options are cleanly managed)
     let html = clean;
+    html = html.replace(/\\begin\{itemize\}(?:\[[^\]]*\])?/g, '<ul class="list-disc pl-5 space-y-1.5 my-2">');
+    html = html.replace(/\\end\{itemize\}/g, '</ul>');
+    html = html.replace(/\\begin\{enumerate\}(?:\[[^\]]*\])?/g, '<ol class="list-decimal pl-5 space-y-1.5 my-2">');
+    html = html.replace(/\\end\{enumerate\}/g, '</ol>');
+    html = html.replace(/\\item\s*(?:\[[^\]]*\])?/g, '<li class="text-neutral-700 text-[13px] leading-relaxed my-0.5">');
+
+    // D. Strip square brackets config/options (e.g. key=value or config names like leftmargin=)
+    html = html.replace(/\[(?:[^\]]*=[^\]]*|leftmargin[^\]]*|label[^\]]*)\]/g, '');
+
+    // E. Convert core headers and formats
     html = html.replace(/\\section\*?\{([^}]+)\}/g, (_, title) => {
       return `<h2 class="text-xs font-bold border-b border-neutral-300 pb-0.5 mt-5 mb-2.5 text-neutral-900 uppercase tracking-wider font-sans">${title}</h2>`;
     });
@@ -95,17 +105,28 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
       return `<h3 class="text-xs font-bold text-neutral-800 mt-3 mb-1 font-sans">${title}</h3>`;
     });
 
+    // F. Handle escaped LaTeX characters
+    html = html.replace(/\\&/g, '&');
+    html = html.replace(/\\%/g, '%');
+    html = html.replace(/\\\$/g, '$');
+    html = html.replace(/\\_/g, '_');
+    html = html.replace(/\\#/g, '#');
+
+    // G. Replace $|$ with a clean vertical separator
+    html = html.replace(/\$\|\$/g, ' | ');
+
+    // H. Handle empty brackets {} (commonly used as spacer or list label in LaTeX)
+    html = html.replace(/\{\}/g, ' - ');
+
+    // I. Replace adjacent bracket groupings like }{ or } { with a formatted separator
+    html = html.replace(/\s*\}\s*\{\s*/g, ' | ');
+
     html = html.replace(/\\textbf\{([^}]+)\}/g, '<strong>$1</strong>');
     html = html.replace(/\\textit\{([^}]+)\}/g, '<em>$1</em>');
     html = html.replace(/\\href\{([^}]+)\}\{([^}]+)\}/g, '<a href="$1" target="_blank" class="text-primary-600 hover:underline">$2</a>');
     html = html.replace(/\\url\{([^}]+)\}/g, '<a href="$1" target="_blank" class="text-primary-600 hover:underline">$1</a>');
 
-    // D. Convert lists
-    html = html.replace(/\\begin\{itemize\}/g, '<ul class="list-disc pl-5 space-y-1.5 my-2">');
-    html = html.replace(/\\end\{itemize\}/g, '</ul>');
-    html = html.replace(/\\item\s+/g, '<li class="text-neutral-700 text-[13px] leading-relaxed">');
-
-    // E. Convert alignment structure (\hfill) to Flexbox
+    // J. Convert alignment structure (\hfill) to Flexbox
     html = html.split("\n").map(line => {
       if (line.includes("\\hfill")) {
         const parts = line.split("\\hfill");
@@ -116,10 +137,10 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
       return line;
     }).join("\n");
 
-    // F. Newlines
+    // K. Newlines
     html = html.replace(/\\\\/g, '<br/>');
 
-    // G. Cleanup miscellaneous commands
+    // L. Cleanup miscellaneous commands
     html = html.replace(/\\small/g, '');
     html = html.replace(/\\large/g, '');
     html = html.replace(/\\normalsize/g, '');
@@ -128,6 +149,9 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
     html = html.replace(/\\vspace\{[^}]*\}/g, '');
     html = html.replace(/\\hspace\{[^}]*\}/g, '');
     html = html.replace(/\\[a-zA-Z]+/g, ''); // catch-all for remaining commands
+
+    // M. Strip remaining standalone literal curly braces (non-HTML tags)
+    html = html.replace(/[{}]/g, '');
 
     // H. Apply Dynamic Keyword Highlighting in a single regex pass
     const activeKeywords = viewState === "original"
@@ -325,13 +349,16 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
           </span>
         </div>
 
-        {/* Paper Container */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar bg-white shadow-lg border border-neutral-200 rounded-lg p-6 md:p-10 font-serif max-w-[800px] mx-auto w-full select-text text-left">
-          {/* Parsed HTML */}
-          <div 
-            className="prose prose-sm max-w-none text-neutral-800 space-y-4"
-            dangerouslySetInnerHTML={{ __html: parsedHtml }}
-          />
+        {/* Paper Scroll Wrapper */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 lg:p-6 bg-neutral-200/50 rounded-xl border border-neutral-300/40 flex justify-center items-start">
+          {/* A4 Paper Sheet */}
+          <div className="w-full max-w-[210mm] min-h-[297mm] bg-white shadow-xl border border-neutral-300 p-[12mm] md:p-[20mm] font-serif select-text text-left relative box-border transition-all">
+            {/* Parsed HTML */}
+            <div 
+              className="prose prose-sm max-w-none text-neutral-800 space-y-3 text-[12px] leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: parsedHtml }}
+            />
+          </div>
         </div>
       </div>
 
