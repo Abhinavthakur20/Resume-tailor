@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClaudeClient, SYSTEM_PROMPT, buildUserMessage } from "@/lib/claude";
+import { tailorWithGrok } from "@/lib/grok";
 import { TailorResponse } from "@/types";
 
 export async function POST(req: NextRequest) {
@@ -13,29 +13,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+    if (!apiKey) {
       return NextResponse.json(
-        { error: "ANTHROPIC_API_KEY is not configured. Please add it to .env.local" },
+        { error: "Grok API key (XAI_API_KEY or GROK_API_KEY) is not configured. Please add it to .env.local" },
         { status: 500 }
       );
     }
 
-    const client = createClaudeClient();
-
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 8000,
-      messages: [
-        {
-          role: "user",
-          content: buildUserMessage(latex, jobDescription),
-        },
-      ],
-      system: SYSTEM_PROMPT,
-    });
-
-    const raw =
-      response.content[0].type === "text" ? response.content[0].text : "";
+    const raw = await tailorWithGrok(latex, jobDescription);
 
     // Try to extract JSON from the response (handles potential markdown fences)
     let jsonStr = raw.trim();
@@ -73,7 +59,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: "An unexpected error occurred. Please try again." },
+      { error: error instanceof Error ? error.message : "An unexpected error occurred. Please try again." },
       { status: 500 }
     );
   }

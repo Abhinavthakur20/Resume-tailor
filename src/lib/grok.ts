@@ -1,5 +1,3 @@
-import Anthropic from "@anthropic-ai/sdk";
-
 export const SYSTEM_PROMPT = `You are an expert ATS (Applicant Tracking System) optimization specialist and technical resume writer.
 
 You will receive:
@@ -41,16 +39,42 @@ Return ONLY this JSON — no explanation, no markdown, no code fences:
   "updatedLatex": "full updated latex code here"
 }`;
 
-export function createClaudeClient(): Anthropic {
-  return new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
-  });
-}
-
 export function buildUserMessage(latex: string, jobDescription: string): string {
   return `RESUME (LaTeX):
 ${latex}
 
 JOB DESCRIPTION:
 ${jobDescription}`;
+}
+
+export async function tailorWithGrok(latex: string, jobDescription: string) {
+  const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+  if (!apiKey) {
+    throw new Error("Grok API key (XAI_API_KEY or GROK_API_KEY) is not configured.");
+  }
+
+  const response = await fetch("https://api.xai.ai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: buildUserMessage(latex, jobDescription) },
+      ],
+      model: "grok-2-latest",
+      temperature: 0,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || `Grok API error: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const rawText = data.choices?.[0]?.message?.content || "";
+  return rawText;
 }
