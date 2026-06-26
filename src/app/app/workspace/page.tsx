@@ -66,49 +66,27 @@ export default function WorkspacePage() {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-5xl mx-auto px-6 py-6 space-y-6">
-          {/* Inputs */}
-          <InputSection latex={latex} jobDescription={jd} onLatexChange={setLatex} onJDChange={setJD} />
-
-          {/* Submit Button */}
-          <div className="flex justify-center py-2">
-            <button onClick={handleSubmit} disabled={!canSubmit}
-              className={`inline-flex items-center gap-2.5 px-10 py-3.5 rounded-xl font-semibold text-base transition-all ${
-                canSubmit
-                  ? "bg-primary-500 hover:bg-primary-600 text-white shadow-sm cursor-pointer active:scale-[0.98]"
-                  : "bg-neutral-100 text-neutral-400 cursor-not-allowed"
-              }`}>
-              {loading === "loading" ? (
-                <>
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                  Analyzing...
-                </>
-              ) : (
-                <>
-                  <span className="material-symbols-outlined" style={{ fontSize: 20, fontVariationSettings: "'FILL' 1" }}>auto_fix_high</span>
-                  Tailor Resume
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Error */}
-          {loading === "error" && error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3 animate-fade-up" style={{ opacity: 0 }}>
-              <span className="material-symbols-outlined text-red-500" style={{ fontSize: 20 }}>error</span>
-              <div>
-                <p className="text-sm font-medium text-red-800">{error}</p>
-                <button onClick={handleSubmit} className="text-xs font-semibold text-red-600 hover:underline mt-1">Try again →</button>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
+          {loading === "success" && result ? (
+            <div ref={resultRef} className="space-y-4">
+              {/* Back to Inputs Button */}
+              <div className="flex items-center">
+                <button
+                  onClick={() => {
+                    setResult(null);
+                    setLoading("idle");
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-lg transition-colors border border-neutral-200/50"
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_back</span>
+                  Edit Inputs
+                </button>
               </div>
+              <OutputSection result={result} originalLatex={latex} />
             </div>
-          )}
-
-          {/* Loading skeleton */}
-          {loading === "loading" && (
-            <div className="space-y-4 animate-fade-up" style={{ opacity: 0 }}>
+          ) : loading === "loading" ? (
+            /* Loading skeleton */
+            <div className="space-y-4 animate-fade-up">
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-neutral-200" />
                 <span className="text-xs text-neutral-400 font-medium flex items-center gap-1.5">
@@ -116,11 +94,11 @@ export default function WorkspacePage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  AI is analyzing your resume...
+                  AI is optimizing your resume...
                 </span>
                 <div className="flex-1 h-px bg-neutral-200" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="skeleton h-28 rounded-xl" />
                 <div className="grid grid-cols-3 gap-3">
                   <div className="skeleton h-28 rounded-xl" />
@@ -129,16 +107,41 @@ export default function WorkspacePage() {
                 </div>
               </div>
               <div className="skeleton h-20 rounded-xl" />
-              <div className="skeleton h-64 rounded-xl" />
+              <div className="skeleton h-[450px] rounded-xl" />
             </div>
-          )}
+          ) : (
+            /* Idle or Error - Show inputs */
+            <div className="space-y-6">
+              {/* Inputs */}
+              <InputSection latex={latex} jobDescription={jd} onLatexChange={setLatex} onJDChange={setJD} />
 
-          {/* Results */}
-          {loading === "success" && result && (
-            <div ref={resultRef}>
-              <OutputSection result={result} originalLatex={latex} />
+              {/* Submit Button */}
+              <div className="flex justify-center py-2">
+                <button onClick={handleSubmit} disabled={!canSubmit}
+                  className={`inline-flex items-center gap-2.5 px-10 py-3.5 rounded-xl font-semibold text-base transition-all ${
+                    canSubmit
+                      ? "bg-primary-500 hover:bg-primary-600 text-white shadow-sm cursor-pointer active:scale-[0.98]"
+                      : "bg-neutral-100 text-neutral-400 cursor-not-allowed"
+                  }`}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 20, fontVariationSettings: "'FILL' 1" }}>auto_fix_high</span>
+                  Tailor Resume
+                </button>
+              </div>
+
+              {/* Error */}
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3 animate-fade-up">
+                  <span className="material-symbols-outlined text-red-500" style={{ fontSize: 20 }}>error</span>
+                  <div>
+                    <p className="text-sm font-medium text-red-800">{error}</p>
+                    <button onClick={handleSubmit} className="text-xs font-semibold text-red-600 hover:underline mt-1">Try again →</button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
+        </div>
+      </div>
         </div>
       </div>
     </div>

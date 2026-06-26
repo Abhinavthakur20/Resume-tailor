@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Features() {
   return (
-    <section id="features" className="py-32 px-6 md:px-12 bg-white">
+    <section id="features" className="py-16 md:py-32 px-6 md:px-12 bg-white">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">

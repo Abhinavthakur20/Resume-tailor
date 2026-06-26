@@ -12,6 +12,7 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
   const [viewState, setViewState] = useState<"original" | "optimized">("optimized");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<"all" | "found" | "added" | "missing">("all");
+  const [activeSubTab, setActiveSubTab] = useState<"keywords" | "preview">("preview");
 
   const { keywordsFound, keywordsAdded, keywordsMissing } = result;
 
@@ -193,10 +194,38 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
   }, [viewState, originalLatex, result, keywordsFound, keywordsAdded]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm">
+    <div className="flex flex-col lg:grid lg:grid-cols-12 gap-0 lg:gap-6 bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm">
       
+      {/* Mobile-only Sub-tab switcher */}
+      <div className="lg:hidden flex border-b border-neutral-200 bg-neutral-50/50 p-1 shrink-0">
+        <button
+          onClick={() => setActiveSubTab("preview")}
+          className={`flex-1 py-2.5 text-xs font-bold text-center rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            activeSubTab === "preview"
+              ? "bg-white text-neutral-800 shadow-xs"
+              : "text-neutral-500 hover:text-neutral-700"
+          }`}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>pageview</span>
+          Preview
+        </button>
+        <button
+          onClick={() => setActiveSubTab("keywords")}
+          className={`flex-1 py-2.5 text-xs font-bold text-center rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+            activeSubTab === "keywords"
+              ? "bg-white text-neutral-800 shadow-xs"
+              : "text-neutral-500 hover:text-neutral-700"
+          }`}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>key</span>
+          Keywords ({stats.satisfied}/{stats.total})
+        </button>
+      </div>
+
       {/* Sidebar: Keyword Tracker Controls */}
-      <div className="lg:col-span-4 bg-neutral-50 border-r border-neutral-200 flex flex-col h-[650px] lg:h-[700px]">
+      <div className={`lg:col-span-4 bg-neutral-50 border-r border-neutral-200 flex-col h-[550px] lg:h-[700px] ${
+        activeSubTab === "keywords" ? "flex" : "hidden lg:flex"
+      }`}>
         {/* Toggle Mode */}
         <div className="p-4 border-b border-neutral-200 shrink-0">
           <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block mb-2">Resume Version</label>
@@ -338,24 +367,26 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
       </div>
 
       {/* Main Panel: Visual A4 Document Sheet */}
-      <div className="lg:col-span-8 p-4 lg:p-6 flex flex-col bg-neutral-100 overflow-hidden h-[650px] lg:h-[700px]">
-        <div className="flex justify-between items-center mb-3 shrink-0">
+      <div className={`lg:col-span-8 p-3 lg:p-6 flex flex-col bg-neutral-100 overflow-hidden h-[550px] lg:h-[700px] ${
+        activeSubTab === "preview" ? "flex" : "hidden lg:flex"
+      }`}>
+        <div className="flex justify-between items-center mb-2.5 shrink-0">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-neutral-600" style={{ fontSize: 18 }}>pageview</span>
-            <h3 className="text-sm font-semibold text-neutral-700">Resume Preview Sheet</h3>
+            <h3 className="text-sm font-semibold text-neutral-700">Resume Preview</h3>
           </div>
           <span className="text-[10px] font-bold text-neutral-400 bg-neutral-200 px-2.5 py-1 rounded-md uppercase tracking-wider">
-            {viewState === "original" ? "Original" : "Optimized"} View
+            {viewState === "original" ? "Original" : "Optimized"}
           </span>
         </div>
 
         {/* Paper Scroll Wrapper */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 lg:p-6 bg-neutral-200/50 rounded-xl border border-neutral-300/40 flex justify-center items-start">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-2 sm:p-4 lg:p-6 bg-neutral-200/50 rounded-xl border border-neutral-300/40 flex justify-center items-start">
           {/* A4 Paper Sheet */}
-          <div className="w-full max-w-[210mm] min-h-[297mm] bg-white shadow-xl border border-neutral-300 p-[12mm] md:p-[20mm] font-serif select-text text-left relative box-border transition-all">
+          <div className="w-full max-w-[210mm] min-h-[297mm] bg-white shadow-xl border border-neutral-300 p-4 sm:p-[12mm] md:p-[20mm] font-serif select-text text-left relative box-border transition-all">
             {/* Parsed HTML */}
             <div 
-              className="prose prose-sm max-w-none text-neutral-800 space-y-3 text-[12px] leading-relaxed"
+              className="prose prose-sm max-w-none text-neutral-800 space-y-3 text-[11px] sm:text-[12px] leading-relaxed"
               dangerouslySetInnerHTML={{ __html: parsedHtml }}
             />
           </div>
