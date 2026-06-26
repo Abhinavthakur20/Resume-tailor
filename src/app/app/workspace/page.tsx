@@ -43,9 +43,9 @@ export default function WorkspacePage() {
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-md bg-primary-500 flex items-center justify-center">
-              <span className="material-symbols-outlined text-white" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>description</span>
+              <span className="material-symbols-outlined text-white" style={{ fontSize: 15, fontVariationSettings: "'FILL' 1" }}>description</span>
             </div>
-            <span className="font-bold text-neutral-900 text-sm">Tailorly</span>
+            <span className="text-base font-semibold italic text-neutral-950 tracking-wide" style={{ fontFamily: "var(--font-playfair), serif" }}>Tailorly</span>
           </Link>
           <div className="h-4 w-px bg-neutral-200" />
           <h1 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Workspace</h1>

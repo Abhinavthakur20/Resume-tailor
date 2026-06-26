@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="w-7 h-7 rounded-md bg-primary-500 flex items-center justify-center">
               <span className="material-symbols-outlined text-white" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>description</span>
             </div>
-            <span className="font-bold text-neutral-900">Tailorly</span>
+            <span className="text-lg font-semibold italic text-neutral-950 tracking-wide" style={{ fontFamily: "var(--font-playfair), serif" }}>Tailorly</span>
           </div>
           <p className="text-sm text-neutral-400 max-w-xs">
             AI-powered ATS optimization for LaTeX resumes. Built for freshers and developers.

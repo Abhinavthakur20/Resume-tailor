@@ -17,7 +17,7 @@ export default function Navbar() {
           <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center">
             <span className="material-symbols-outlined text-white" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>description</span>
           </div>
-          <span className="font-bold text-neutral-900 text-lg">Tailorly</span>
+          <span className="text-xl font-semibold italic text-neutral-950 tracking-wide" style={{ fontFamily: "var(--font-playfair), serif" }}>Tailorly</span>
         </Link>
 
         {/* Desktop Links */}
