@@ -62,15 +62,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a, button, select, input, textarea, [role="button"], [onClick], .cursor-pointer {
-    cursor: none !important;
-  }
-}
-
 /* ===== MATERIAL SYMBOLS ===== */
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
