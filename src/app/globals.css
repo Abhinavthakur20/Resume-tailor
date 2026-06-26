@@ -34,7 +34,7 @@
   --color-warning-50: #fffbeb;
   --color-warning-500: #f59e0b;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-outfit), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
 
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
