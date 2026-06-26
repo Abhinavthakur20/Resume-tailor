@@ -13,10 +13,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+    const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY || process.env.GROQ_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "Grok API key (XAI_API_KEY or GROK_API_KEY) is not configured. Please add it to .env.local" },
+        { error: "Grok/Groq API key (XAI_API_KEY, GROK_API_KEY, or GROQ_API_KEY) is not configured. Please add it to .env" },
         { status: 500 }
       );
     }

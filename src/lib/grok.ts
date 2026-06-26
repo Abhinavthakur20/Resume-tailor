@@ -48,12 +48,18 @@ ${jobDescription}`;
 }
 
 export async function tailorWithGrok(latex: string, jobDescription: string) {
-  const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+  const apiKey = process.env.XAI_API_KEY || process.env.GROK_API_KEY || process.env.GROQ_API_KEY;
   if (!apiKey) {
-    throw new Error("Grok API key (XAI_API_KEY or GROK_API_KEY) is not configured.");
+    throw new Error("Grok/Groq API key (XAI_API_KEY, GROK_API_KEY, or GROQ_API_KEY) is not configured.");
   }
 
-  const response = await fetch("https://api.xai.ai/v1/chat/completions", {
+  const isGroq = apiKey.startsWith("gsk_");
+  const url = isGroq
+    ? "https://api.groq.com/openai/v1/chat/completions"
+    : "https://api.x.ai/v1/chat/completions";
+  const model = isGroq ? "llama-3.3-70b-versatile" : "grok-2-latest";
+
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -64,14 +70,16 @@ export async function tailorWithGrok(latex: string, jobDescription: string) {
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: buildUserMessage(latex, jobDescription) },
       ],
-      model: "grok-2-latest",
+      model: model,
       temperature: 0,
+      response_format: { type: "json_object" },
     }),
   });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error?.message || `Grok API error: ${response.statusText}`);
+    const provider = isGroq ? "Groq" : "Grok";
+    throw new Error(errorData.error?.message || `${provider} API error: ${response.statusText}`);
   }
 
   const data = await response.json();

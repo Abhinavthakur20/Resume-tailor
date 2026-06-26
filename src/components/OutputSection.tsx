@@ -1,13 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { TailorResponse } from "@/types";
 import ATSScore from "./ATSScore";
 import KeywordBadges from "./KeywordBadges";
 import CodeEditor from "./CodeEditor";
+import VisualPreview from "./VisualPreview";
 
 interface Props { result: TailorResponse; originalLatex: string; }
 
 export default function OutputSection({ result, originalLatex }: Props) {
+  const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
+
   return (
     <div className="space-y-5 animate-fade-up" style={{ opacity: 0, animationDelay: "0.1s" }}>
       {/* Divider */}
@@ -41,8 +44,43 @@ export default function OutputSection({ result, originalLatex }: Props) {
         </div>
       </div>
 
-      <KeywordBadges keywordsFound={result.keywordsFound} keywordsMissing={result.keywordsMissing} keywordsAdded={result.keywordsAdded} />
-      <CodeEditor originalLatex={originalLatex} updatedLatex={result.updatedLatex} />
+      {/* View Switcher Tabs */}
+      <div className="flex border-b border-neutral-200 text-sm font-semibold tracking-wide gap-6">
+        <button
+          onClick={() => setActiveTab("preview")}
+          className={`pb-2.5 px-1 border-b-2 transition-all flex items-center gap-2 ${
+            activeTab === "preview"
+              ? "border-primary-500 text-primary-600 font-bold"
+              : "border-transparent text-neutral-500 hover:text-neutral-700"
+          }`}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 18 }}>pageview</span>
+          Visual Preview
+        </button>
+        <button
+          onClick={() => setActiveTab("code")}
+          className={`pb-2.5 px-1 border-b-2 transition-all flex items-center gap-2 ${
+            activeTab === "code"
+              ? "border-primary-500 text-primary-600 font-bold"
+              : "border-transparent text-neutral-500 hover:text-neutral-700"
+          }`}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 18 }}>code</span>
+          LaTeX Source Code
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      <div className="mt-2">
+        {activeTab === "preview" ? (
+          <VisualPreview originalLatex={originalLatex} result={result} />
+        ) : (
+          <div className="space-y-5">
+            <KeywordBadges keywordsFound={result.keywordsFound} keywordsMissing={result.keywordsMissing} keywordsAdded={result.keywordsAdded} />
+            <CodeEditor originalLatex={originalLatex} updatedLatex={result.updatedLatex} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
