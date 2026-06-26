@@ -329,19 +329,16 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
             filteredKeywords.map(kw => {
               let icon = "check_circle";
               let iconColor = "text-green-500";
-              let bg = "bg-white border-neutral-200";
-              let statusLabel = "Already Present";
+              const bg = "bg-white border-neutral-200";
               let subtext = "Matches resume content";
 
               if (kw.status === "added") {
                 icon = "add_circle";
                 iconColor = "text-primary-500";
-                statusLabel = "Added by Tailorly";
                 subtext = "Successfully tailored into bullets";
               } else if (kw.status === "missing") {
                 icon = "cancel";
                 iconColor = "text-red-400";
-                statusLabel = "Missing / Not Added";
                 subtext = "Not found & couldn't fit naturally";
               }
 
