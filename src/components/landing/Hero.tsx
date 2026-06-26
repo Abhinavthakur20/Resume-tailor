@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="pt-44 pb-36 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
+    <section className="pt-28 pb-24 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column - Headline & CTA */}
         <div className="lg:col-span-6 text-left space-y-8 animate-fade-up">
