@@ -82,7 +82,7 @@ export default function InputSection({ latex, jobDescription, onLatexChange, onJ
               onClick={() => fileRef.current?.click()}
               onDragOver={(e: DragEvent) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={(e: DragEvent) => { e.preventDefault(); setIsDragging(false); }}
-              onDrop={(e: DragEvent) => { e.preventDefault(); setIsDragging(false); e.dataTransfer.files[0] && readFile(e.dataTransfer.files[0]); }}
+              onDrop={(e: DragEvent) => { e.preventDefault(); setIsDragging(false); if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]); }}
               className={`flex-1 min-h-[350px] rounded-xl border-2 border-dashed cursor-pointer flex flex-col items-center justify-center gap-3 transition-all ${
                 isDragging ? "border-primary-500 bg-primary-50" : "border-neutral-200 bg-white hover:border-neutral-300"
               }`}
