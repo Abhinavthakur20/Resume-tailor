@@ -60,6 +60,11 @@ body {
   background: #ffffff;
   color: var(--color-neutral-900);
   -webkit-font-smoothing: antialiased;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path d='M3 2v14.4l3.9-3.9 2.5 5.5 1.8-.8-2.5-5.5 5.3-.3L3 2z' fill='black' stroke='white' stroke-width='1.5' stroke-linejoin='round'/></svg>") 3 2, auto;
+}
+
+a, button, select, input, textarea, [role="button"], [onClick], .cursor-pointer {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path d='M3 2v14.4l3.9-3.9 2.5 5.5 1.8-.8-2.5-5.5 5.3-.3L3 2z' fill='black' stroke='white' stroke-width='1.5' stroke-linejoin='round'/></svg>") 3 2, pointer !important;
 }
 
 /* ===== MATERIAL SYMBOLS ===== */

@@ -3,15 +3,10 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="pt-28 pb-24 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
+    <section className="pt-20 pb-24 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column - Headline & CTA */}
         <div className="lg:col-span-6 text-left space-y-8 animate-fade-up">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
-            <span className="material-symbols-outlined" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>bolt</span>
-            AI-Powered ATS Optimization
-          </div>
-
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-neutral-900 leading-[1.1] tracking-tight">
               Tailor your resume <br />
