@@ -23,9 +23,13 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-16 md:py-32 px-6 md:px-12">
+    <section className="py-16 md:py-32 px-6 md:px-12 bg-white border-b border-neutral-100">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-14">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-bold bg-primary-50 text-primary-600 border border-primary-100/80 uppercase tracking-wider mb-3">
+            <span className="material-symbols-outlined" style={{ fontSize: 12 }}>chat</span>
+            Social Proof
+          </span>
           <h2 className="text-3xl font-bold text-neutral-900 mb-3">What Users Say</h2>
           <p className="text-neutral-500">Real feedback from developers and job seekers.</p>
         </div>
