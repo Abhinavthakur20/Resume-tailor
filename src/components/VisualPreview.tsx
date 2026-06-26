@@ -306,7 +306,7 @@ export default function VisualPreview({ originalLatex, result }: VisualPreviewPr
             ].map(f => (
               <button
                 key={f.id}
-                onClick={() => setActiveFilter(f.id as any)}
+                onClick={() => setActiveFilter(f.id as "all" | "found" | "added" | "missing")}
                 className={`px-2 py-1 border rounded-md transition-all ${
                   activeFilter === f.id
                     ? "bg-neutral-800 text-white border-neutral-800"
