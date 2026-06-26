@@ -8,7 +8,7 @@ export default function Hero() {
         {/* Left Column - Headline & CTA */}
         <div className="lg:col-span-6 text-left space-y-8 animate-fade-up">
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-neutral-900 leading-[1.1] tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold text-neutral-900 leading-[1.1] tracking-tight">
               Tailor your resume <br />
               <span className="text-primary-500">for every job.</span>
             </h1>
