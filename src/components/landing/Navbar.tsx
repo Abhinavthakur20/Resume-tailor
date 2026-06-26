@@ -12,7 +12,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-sm border-b border-neutral-200">
-      <nav className="max-w-6xl mx-auto px-8 sm:px-16 md:px-24 h-16 flex items-center justify-between">
+      <nav className="max-w-5xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center">
             <span className="material-symbols-outlined text-white" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>description</span>

@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 px-8 sm:px-16 md:px-24 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="features" className="py-32 px-6 md:px-12 bg-white">
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight mb-4">

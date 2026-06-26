@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="pt-44 pb-36 px-8 sm:px-16 md:px-24 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+    <section className="pt-44 pb-36 px-6 md:px-12 bg-linear-to-b from-neutral-50 to-white overflow-hidden">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column - Headline & CTA */}
         <div className="lg:col-span-6 text-left space-y-8 animate-fade-up">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
@@ -140,7 +140,7 @@ export default function Hero() {
       </div>
 
       {/* Stat Row */}
-      <div className="max-w-6xl mx-auto mt-28 pt-12 border-t border-neutral-200/80">
+      <div className="max-w-5xl mx-auto mt-28 pt-12 border-t border-neutral-200/80">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="text-center md:text-left space-y-2">
             <div className="text-3xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight">3x</div>
