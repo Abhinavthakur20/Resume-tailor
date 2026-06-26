@@ -1,92 +1,64 @@
-/* ========= TAILWIND BASE ========= */
 @import "tailwindcss";
 
-/* ========= TAILWIND v4 THEME ========= */
 @theme inline {
-  /* ---- Colors: MD3 Orange Palette ---- */
-  --color-brand-50: #fff7ed;
-  --color-brand-100: #ffead5;
-  --color-brand-200: #fdd0aa;
-  --color-brand-300: #ffb680;
-  --color-brand-400: #f97316;
-  --color-brand-500: #ea580c;
-  --color-brand-600: #9d4300;
-  --color-brand-700: #7c2d00;
-  --color-brand-800: #431600;
-  --color-brand-900: #1a0900;
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
 
-  --color-surface-50: #f8f9ff;
-  --color-surface-100: #eff4ff;
-  --color-surface-200: #e5eeff;
-  --color-surface-300: #dce9ff;
-  --color-surface-400: #d3e4fe;
-  --color-surface-500: #cbdbf5;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
 
-  --color-ink-900: #0b1c30;
-  --color-ink-700: #1e3a5f;
-  --color-ink-500: #3f465c;
-  --color-ink-400: #565e74;
-  --color-ink-300: #8c7164;
-  --color-ink-200: #a0a0b0;
-  --color-ink-100: #c4c7d0;
+  --color-success-50: #f0fdf4;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
 
-  --color-danger: #dc2626;
-  --color-danger-light: #fef2f2;
-  --color-success: #16a34a;
-  --color-success-light: #f0fdf4;
+  --color-danger-50: #fef2f2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
 
-  /* ---- Fonts ---- */
-  --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
+  --color-warning-50: #fffbeb;
+  --color-warning-500: #f59e0b;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
 
-  /* ---- Animations ---- */
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-pulse-ring: pulse-ring 3s infinite ease-in-out;
-  --animate-shimmer: shimmer 1.8s infinite linear;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-glow: glow-pulse 2s ease-in-out infinite alternate;
 
   @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes pulse-ring {
-    0% { transform: scale(0.95); opacity: 0.5; }
-    50% { transform: scale(1.08); opacity: 0.2; }
-    100% { transform: scale(0.95); opacity: 0.5; }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-  }
-
-  @keyframes glow-pulse {
-    from { opacity: 0.4; }
-    to { opacity: 0.8; }
+    0%, 100% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 0.2; }
   }
 }
 
-/* ========= GLOBAL STYLES ========= */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #e0c0b1 transparent;
-}
-
+/* ===== BASE ===== */
 body {
-  background: linear-gradient(135deg, #f8f9ff 0%, #eff4ff 50%, #fff7ed 100%);
-  color: #0b1c30;
   font-family: var(--font-sans);
-  min-height: 100vh;
+  background: #ffffff;
+  color: var(--color-neutral-900);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ========= MATERIAL SYMBOLS ========= */
+/* ===== MATERIAL SYMBOLS ===== */
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
   font-weight: normal;
@@ -100,45 +72,28 @@ body {
   word-wrap: normal;
   direction: ltr;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   font-feature-settings: "liga";
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   vertical-align: middle;
 }
 
-/* ========= CUSTOM SCROLLBAR ========= */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e0c0b1;
-  border-radius: 999px;
-}
+/* ===== SCROLLBAR ===== */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--color-neutral-300); border-radius: 999px; }
+* { scrollbar-width: thin; scrollbar-color: var(--color-neutral-300) transparent; }
 
-/* ========= SKELETON LOADING ========= */
+/* ===== SKELETON ===== */
 .skeleton {
-  background: linear-gradient(90deg, #eff4ff 25%, #dce9ff 50%, #eff4ff 75%);
+  background: linear-gradient(90deg, var(--color-neutral-100) 25%, var(--color-neutral-200) 50%, var(--color-neutral-100) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.8s infinite linear;
-  border-radius: 16px;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* ========= CHIP HOVER ========= */
-.keyword-chip {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: default;
-}
-.keyword-chip:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* ========= TEXTAREA RESET ========= */
-textarea:focus {
-  outline: none;
-  box-shadow: none;
-}
+/* ===== TEXTAREA RESET ===== */
+textarea:focus { outline: none; box-shadow: none; }
